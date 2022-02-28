@@ -23,7 +23,7 @@ function playRound(playerSelection, computerSelection){
     const resultStr = "computer guessed " + computerSelection + " --> ";
 
     if(playerSelection == computerSelection) {
-        return resultStr + "tie";
+        return "tie";
     }
 
     const playerLoses = ((playerSelection == "rock") && (computerSelection == "paper")) ||
@@ -31,10 +31,48 @@ function playRound(playerSelection, computerSelection){
                         ((playerSelection == "scissors") && (computerSelection == "rock"));
     
     if(playerLoses) {
-        return resultStr + "player loses, computer wins";
+        return "computer";
     }
 
-    return resultStr + "player wins, computer loses";
+    return "player";
 }
 
-console.log(playRound("scissors", computerPlay()));
+/* game: Plays 5 rounds of rock paper scissors. Console logs the results from each
+    game, and the final winner */
+function game() {
+    let playerScore = 0;
+    let compScore = 0;
+
+    for(let i = 0; i < 5; i++) {
+        const compPlay = computerPlay();
+        const playerPlay = prompt("Choose: rock, paper, or scissors");
+        const winner = playRound(playerPlay, compPlay);
+        if(winner == "player") {
+            playerScore++;
+        } else if(winner == "computer") {
+            compScore++;
+        } else {
+            playerScore++;
+            compScore++;
+        }
+
+        let winStr = winner + " wins!";
+        if(winner == "tie") {
+            winStr = "tie ";
+        }
+        console.log(winStr + " Your play: " + playerPlay + 
+            ", Computer's play: " + compPlay);
+    }
+
+    console.log("TOTAL SCORES -- player: " + playerScore + " computer: " + compScore);
+    if(playerScore > compScore) {
+        console.log("YOU WIN!");
+    } else if(compScore > playerScore) {
+        console.log("YOU LOSE");
+    } else {
+        console.log("TIE");
+    }
+
+}
+
+game();
